@@ -1,18 +1,13 @@
 package com.example.a;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Toast;
-
+import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -35,7 +30,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public interface OnClickEvent {
         void OnItemClick(int position);
 
-        void OnItemDelete(int position);
     }
 
     public void setOnClickEvent(OnClickEvent onClickEvent) {
@@ -62,6 +56,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.editText.setText(work.getDate());
         holder.content.setText(work.getContent());
 
+        holder.img.setText(Integer.toString(work.getId()));
 
     }
 
@@ -73,6 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private EditText editText, title, content;
+        private TextView img;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +76,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             title = itemView.findViewById(R.id.title);
             editText = itemView.findViewById(R.id.date);
             content = itemView.findViewById(R.id.content);
+            img = itemView.findViewById(R.id.prefix);
         }
     }
 }

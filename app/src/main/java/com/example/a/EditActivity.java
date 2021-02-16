@@ -3,7 +3,6 @@ package com.example.a;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import java.util.Locale;
 public class EditActivity extends AppCompatActivity {
     private EditText editText, etitle, econtent;
     final Calendar myCalendar = Calendar.getInstance();
-    private Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

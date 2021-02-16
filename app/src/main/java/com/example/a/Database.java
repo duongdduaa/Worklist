@@ -59,7 +59,8 @@ public class Database extends SQLiteOpenHelper {
         db.close();
         return worklist;
     }
-    public void update(Work work){
+
+    public void update(Work work) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("TITLE", work.getTitle());
@@ -67,7 +68,8 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put("CONTENT", work.getContent());
         db.update("WORK", contentValues, "ID = " + work.getId(), null);
     }
-    public void delete(int id){
+
+    public void delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("WORK", " ID = " + id, null);
         db.close();

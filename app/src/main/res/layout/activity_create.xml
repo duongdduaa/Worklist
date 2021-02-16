@@ -28,7 +28,7 @@
             android:id="@+id/create_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Ten Cong Viec"
+            android:hint="Cong Viec"
             app:layout_constraintLeft_toRightOf="@id/ctieude"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

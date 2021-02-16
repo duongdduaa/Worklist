@@ -2,14 +2,14 @@ package com.example.a;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,13 +18,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import javax.xml.transform.OutputKeys;
-
 public class MainActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     private ArrayList<Work> worklist;
     private Database database;
     private Adapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,14 +51,27 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                Toast.makeText(MainActivity.this, "on Swiped ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                Work work = worklist.get(position);
-                worklist.remove(position);
-                database.delete(work.getId());
-                worklist = database.getAll();
-                adapter.setData(worklist);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Xoa").setMessage("Me co muon xoa ko?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                int position = viewHolder.getAdapterPosition();
+                                Work work = worklist.get(position);
+                                worklist.remove(position);
+                                database.delete(work.getId());
+                                worklist = database.getAll();
+                                adapter.setData(worklist);
+                            }
+                        }).setNegativeButton("Khong", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        adapter.setData(worklist);
+                    }
+                }).create().show();
+
+
             }
 
             @Override
@@ -71,19 +82,11 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        adapter.setOnClickEvent(new Adapter.OnClickEvent() {
-            @Override
-            public void OnItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, EditActivity.class);
-                Work work = worklist.get(position);
-                intent.putExtra("data", work);
-                startActivityForResult(intent, 2);
-            }
-
-            @Override
-            public void OnItemDelete(int position) {
-
-            }
+        adapter.setOnClickEvent(position -> {
+            Intent intent = new Intent(MainActivity.this, EditActivity.class);
+            Work work = worklist.get(position);
+            intent.putExtra("data", work);
+            startActivityForResult(intent, 2);
         });
     }
 

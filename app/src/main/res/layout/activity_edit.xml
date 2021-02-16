@@ -27,7 +27,7 @@
         <EditText
             android:id="@+id/edit_title"
             android:layout_width="wrap_content"
-            android:hint="Ten Cong Viec"
+            android:hint="Cong Viec"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/etieude"
             app:layout_constraintTop_toTopOf="parent" />
