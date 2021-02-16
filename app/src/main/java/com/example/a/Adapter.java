@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     private ArrayList<Work> worklist;
     private OnClickEvent onClickEvent;
-    private Context context;
 
     public Adapter() {
 
@@ -49,9 +48,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Adapter.MyViewHolder holder, int position) {
         Work work = worklist.get(position);
-        holder.itemView.setOnClickListener(v ->{
-            onClickEvent.OnItemClick(position);
-        });
+        holder.itemView.setOnClickListener(v -> onClickEvent.OnItemClick(position));
         holder.title.setText(work.getTitle());
         holder.editText.setText(work.getDate());
         holder.content.setText(work.getContent());
@@ -72,7 +69,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            context = itemView.getContext();
             title = itemView.findViewById(R.id.title);
             editText = itemView.findViewById(R.id.date);
             content = itemView.findViewById(R.id.content);

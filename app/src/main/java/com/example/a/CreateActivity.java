@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
@@ -23,8 +22,6 @@ public class CreateActivity extends AppCompatActivity {
     private EditText edittext, ctitle, ccontent;
     final Calendar myCalendar = Calendar.getInstance();
     private Database database;
-    private Work work;
-    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +32,12 @@ public class CreateActivity extends AppCompatActivity {
         ccontent = findViewById(R.id.create_content);
         edittext = findViewById(R.id.create_date);
 
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                updateLabel();
-            }
-
+            updateLabel();
         };
 
         edittext.setOnClickListener(v -> {

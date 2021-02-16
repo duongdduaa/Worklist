@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
                 worklist.add(work);
             } while (cursor.moveToNext());
 
-        }
+        }cursor.close();
         db.close();
         return worklist;
     }

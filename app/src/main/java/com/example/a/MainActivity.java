@@ -53,23 +53,17 @@ public class MainActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Xoa").setMessage("Me co muon xoa ko?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                int position = viewHolder.getAdapterPosition();
-                                Work work = worklist.get(position);
-                                worklist.remove(position);
-                                database.delete(work.getId());
-                                worklist = database.getAll();
-                                adapter.setData(worklist);
-                            }
-                        }).setNegativeButton("Khong", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        adapter.setData(worklist);
-                    }
-                }).create().show();
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            int position = viewHolder.getAdapterPosition();
+                            Work work = worklist.get(position);
+                            worklist.remove(position);
+                            database.delete(work.getId());
+                            worklist = database.getAll();
+                            adapter.setData(worklist);
+                        }).setNegativeButton("Khong", (dialog, which) -> {
+                            dialog.cancel();
+                            adapter.setData(worklist);
+                        }).create().show();
 
 
             }
@@ -99,11 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.create:
-                Intent intent = new Intent(MainActivity.this, CreateActivity.class);
-                startActivityForResult(intent, 1);
-
+        if (item.getItemId() == R.id.create) {
+            Intent intent = new Intent(MainActivity.this, CreateActivity.class);
+            startActivityForResult(intent, 1);
         }
         return super.onOptionsItemSelected(item);
     }
