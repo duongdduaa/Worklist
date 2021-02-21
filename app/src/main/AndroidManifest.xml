@@ -12,6 +12,11 @@
         <activity
             android:name=".EditActivity"
             android:theme="@style/Theme.AppCompat.DayNight" />
+        <receiver
+            android:name=".AlertBrr"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".CreateActivity"
             android:label="Duong"
