@@ -2,6 +2,9 @@ package com.example.a;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -10,16 +13,15 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -28,8 +30,8 @@ public class CreateActivity extends AppCompatActivity {
 
     private EditText edittext, ctitle, ccontent;
     final Calendar myCalendar = Calendar.getInstance();
-    private Database database;
-
+    RecyclerView.ViewHolder viewHolder;
+    private ArrayList<Work> worklist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,19 +96,20 @@ public class CreateActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.done) {
+
             Work work = new Work();
             work.setTitle(ctitle.getText().toString());
             work.setDate(edittext.getText().toString());
             work.setContent(ccontent.getText().toString());
-            database = new Database(CreateActivity.this);
+            Database database = new Database(CreateActivity.this);
             database.add(work);
-            setResult(Activity.RESULT_OK, new Intent());
-            ////
-            Intent intent2 = new Intent(CreateActivity.this, AlertBrr.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(CreateActivity.this, 0, intent2, 0);
+            //
+            Intent intent = new Intent(CreateActivity.this, AlertBrr.class);
+            intent.putExtra("work", work);
+            sendBroadcast(intent);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(CreateActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pendingIntent);
-
 
             finish();
             return true;
