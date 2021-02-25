@@ -25,8 +25,8 @@ public class AlertBrr extends BroadcastReceiver {
         Bundle bundle = intent.getParcelableExtra("bundle");
         Work work = (Work) bundle.getSerializable("work");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "duong")
-                .setContentTitle(work.getTitle())
-                .setContentText(work.getContent())
+                .setContentTitle("Nhắc nhở: " + work.getTitle())
+                .setContentText("Nội dung: " + work.getContent())
                 .setSmallIcon(R.drawable.done);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
