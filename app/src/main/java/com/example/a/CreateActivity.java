@@ -105,8 +105,9 @@ public class CreateActivity extends AppCompatActivity {
             database.add(work);
             //
             Intent intent = new Intent(CreateActivity.this, AlertBrr.class);
-            intent.putExtra("work", work);
-            sendBroadcast(intent);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("work", work);
+            intent.putExtra("bundle", bundle);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(CreateActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pendingIntent);

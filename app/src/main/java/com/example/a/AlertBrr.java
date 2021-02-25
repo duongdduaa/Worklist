@@ -21,12 +21,12 @@ public class AlertBrr extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Work work = (Work) intent.getSerializableExtra("work");
-
+//        Work work = (Work) intent.getSerializableExtra("work");
+        Bundle bundle = intent.getParcelableExtra("bundle");
+        Work work = (Work) bundle.getSerializable("work");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "duong")
                 .setContentTitle(work.getTitle())
                 .setContentText(work.getContent())
-                .setContentInfo(work.getDate())
                 .setSmallIcon(R.drawable.done);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
