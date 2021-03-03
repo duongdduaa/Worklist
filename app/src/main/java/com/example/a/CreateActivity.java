@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +30,7 @@ import java.util.Locale;
 public class CreateActivity extends AppCompatActivity {
 
 
-    private EditText edittext, ctitle, ccontent;
+    private TextInputEditText cdate, ctitle, ccontent;
     final Calendar myCalendar = Calendar.getInstance();
     RecyclerView.ViewHolder viewHolder;
     private ArrayList<Work> worklist;
@@ -44,7 +46,7 @@ public class CreateActivity extends AppCompatActivity {
 
         ctitle = findViewById(R.id.create_title);
         ccontent = findViewById(R.id.create_content);
-        edittext = findViewById(R.id.create_date);
+        cdate = findViewById(R.id.create_date);
 
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -59,7 +61,7 @@ public class CreateActivity extends AppCompatActivity {
         };
 
 
-        edittext.setOnClickListener(v -> {
+        cdate.setOnClickListener(v -> {
             new DatePickerDialog(CreateActivity.this, date,
                     myCalendar.get(Calendar.YEAR),
                     myCalendar.get(Calendar.MONTH),
@@ -84,7 +86,7 @@ public class CreateActivity extends AppCompatActivity {
     private void updateLabel() {
         String myFormat = "HH:mm, dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        edittext.setText(sdf.format(myCalendar.getTime()));
+        cdate.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
@@ -99,7 +101,7 @@ public class CreateActivity extends AppCompatActivity {
 
             Work work = new Work();
             work.setTitle(ctitle.getText().toString());
-            work.setDate(edittext.getText().toString());
+            work.setDate(cdate.getText().toString());
             work.setContent(ccontent.getText().toString());
             Database database = new Database(CreateActivity.this);
             database.add(work);

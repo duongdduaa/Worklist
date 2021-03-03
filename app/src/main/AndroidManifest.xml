@@ -8,10 +8,9 @@
         android:label="Duong"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.A">
+        android:theme="@style/Theme.MaterialComponents.Light.Bridge">
         <activity
-            android:name=".EditActivity"
-            android:theme="@style/Theme.AppCompat.DayNight" />
+            android:name=".EditActivity" />
         <receiver
             android:name=".AlertBrr"
             android:enabled="true"
@@ -20,11 +19,8 @@
         <activity
             android:name=".CreateActivity"
             android:label="Duong"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight" />
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight">
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

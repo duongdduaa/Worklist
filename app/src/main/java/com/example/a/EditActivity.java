@@ -11,26 +11,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SeekBar;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class EditActivity extends AppCompatActivity {
-    private EditText editText, etitle, econtent;
+
     final Calendar myCalendar = Calendar.getInstance();
+    private TextInputEditText edate, etitle, econtent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
         etitle = findViewById(R.id.edit_title);
-        editText = findViewById(R.id.edit_date);
+        edate = findViewById(R.id.edit_date);
         econtent = findViewById(R.id.edit_content);
         Work work = (Work) getIntent().getSerializableExtra("data");
         etitle.setText(work.getTitle());
-        editText.setText(work.getDate());
+        edate.setText(work.getDate());
         econtent.setText(work.getContent());
+
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -39,7 +45,7 @@ public class EditActivity extends AppCompatActivity {
             updateLabel();
         };
 
-        editText.setOnClickListener(v -> {
+        edate.setOnClickListener(v -> {
             new DatePickerDialog(EditActivity.this, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -62,7 +68,7 @@ public class EditActivity extends AppCompatActivity {
         String myFormat = "HH:mm, dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        editText.setText(sdf.format(myCalendar.getTime()));
+        edate.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
@@ -76,7 +82,7 @@ public class EditActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.done) {
             Work work = (Work) getIntent().getSerializableExtra("data");
             work.setTitle(etitle.getText().toString());
-            work.setDate(editText.getText().toString());
+            work.setDate(edate.getText().toString());
             work.setContent(econtent.getText().toString());
             Intent intent = new Intent().putExtra("back", work);
             setResult(RESULT_OK, intent);

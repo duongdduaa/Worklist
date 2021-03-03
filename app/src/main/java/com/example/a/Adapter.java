@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -53,7 +56,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.editText.setText(work.getDate());
         holder.content.setText(work.getContent());
 
-        holder.img.setText(Integer.toString(work.getId()));
+//        holder.img.setText(Integer.toString(work.getId()));
 
     }
 
@@ -64,15 +67,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private EditText editText, title, content;
-        private TextView img;
+        private TextView editText, title, content;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             editText = itemView.findViewById(R.id.date);
             content = itemView.findViewById(R.id.content);
-            img = itemView.findViewById(R.id.prefix);
+
         }
     }
 }
